@@ -14,9 +14,6 @@ using System.Threading.Tasks;
 using System.Linq;
 using Business.Handlers.Products.ValidationRules;
 using System;
-using Entities.Enums;
-using System.Text.Json.Serialization;
-using static Entities.Enums.ESizeTypeEnum;
 
 namespace Business.Handlers.Products.Commands
 {
@@ -53,12 +50,12 @@ namespace Business.Handlers.Products.Commands
 			[SecuredOperation(Priority = 1)]
 			public async Task<IResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
 			{
-				var isThereProductName = _productRepository.Query().Any(x => x.ProductName == request.ProductName);
-				var isThereProductColor= _productRepository.Query().Any(x => x.ProductColor == request.ProductColor);
-				var isThereProductSize = _productRepository.Query().Any(x => x.Size == request.Size);
+				
 
+                var isThereCustomerIsDeleted = _productRepository.Query()
+					.Any(u => u.ProductName == request.ProductName && u.ProductColor == request.ProductColor && u.Size ==request.Size && u.isDeleted == false);
 
-				if (isThereProductName == true && isThereProductColor == true && isThereProductSize == true)
+                if (isThereCustomerIsDeleted == true)
 					return new ErrorResult(Messages.NameAlreadyExist);
 
 				var addedProduct = new Product

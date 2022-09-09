@@ -49,11 +49,11 @@ namespace Business.Handlers.Orders.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
             {
-                var isThereOrderRecord = _orderRepository.Query().Any(u => u.Id == request.Id);
-
+                var isThereOrderRecord = _orderRepository.Query()
+                    .Any(u => u.ProductId == request.ProductId && u.CustomerId == request.CustomerId && u.Amount == request.Amount && u.isDeleted == false);
                 if (isThereOrderRecord == true)
                     return new ErrorResult(Messages.NameAlreadyExist);
-
+             
                 var addedOrder = new Order
                 {
                     CreatedUserId = request.CreatedUserId,
