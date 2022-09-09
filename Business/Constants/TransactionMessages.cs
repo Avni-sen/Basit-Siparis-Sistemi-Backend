@@ -10,7 +10,7 @@
         public static string Added => "Added";
         public static string Deleted => "Deleted";
         public static string Updated => "Updated";
-        public static string NameAlreadyExist => "NameAlreadyExist";
+        public static string NameAlreadyExist => "There's a Record Like That";
         public static string TokenProviderException => "TokenProviderException";
         public static string Unknown => "Unknown";
     }

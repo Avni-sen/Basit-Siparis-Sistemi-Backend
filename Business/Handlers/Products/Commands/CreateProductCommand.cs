@@ -53,9 +53,12 @@ namespace Business.Handlers.Products.Commands
 			[SecuredOperation(Priority = 1)]
 			public async Task<IResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
 			{
-				var isThereProductRecord = _productRepository.Query().Any(u => u.Id == request.Id);
+				var isThereProductName = _productRepository.Query().Any(x => x.ProductName == request.ProductName);
+				var isThereProductColor= _productRepository.Query().Any(x => x.ProductColor == request.ProductColor);
+				var isThereProductSize = _productRepository.Query().Any(x => x.Size == request.Size);
 
-				if (isThereProductRecord == true)
+
+				if (isThereProductName == true && isThereProductColor == true && isThereProductSize == true)
 					return new ErrorResult(Messages.NameAlreadyExist);
 
 				var addedProduct = new Product

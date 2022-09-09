@@ -22,7 +22,6 @@ namespace Business.Handlers.Customers.Commands
 	/// </summary>
 	public class CreateCustomerCommand : IRequest<IResult>
 	{
-
 		public int CreatedUserId { get; set; }
 		public int LastUpdatedUserId { get; set; }
 		public bool Status { get; set; }
@@ -50,9 +49,8 @@ namespace Business.Handlers.Customers.Commands
 			[SecuredOperation(Priority = 1)]
 			public async Task<IResult> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
 			{
-				var isThereCustomerRecord = _customerRepository.Query().Any(u => u.CustomerCode == request.CustomerCode);
-
-				if (isThereCustomerRecord == true)
+				var isThereCustomerIsDeleted = _customerRepository.Query().Any(u => u.CustomerName == request.CustomerName && u.isDeleted == false);
+				if (isThereCustomerIsDeleted==true)
 					return new ErrorResult(Messages.NameAlreadyExist);
 
 				var addedCustomer = new Customer
