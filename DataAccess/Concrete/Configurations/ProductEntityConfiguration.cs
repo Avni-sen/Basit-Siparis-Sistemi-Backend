@@ -14,7 +14,7 @@ namespace DataAccess.Concrete.Configurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.ProductName);
             builder.Property(x => x.ProductColor);
-            builder.Property(x => x.Size);
+            builder.Property(x =>  x.Size);
         }
     }
 }

@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 using System.Linq;
 using Business.Handlers.Products.ValidationRules;
 using System;
+using Entities.Enums;
+using System.Text.Json.Serialization;
+using static Entities.Enums.ESizeTypeEnum;
 
 namespace Business.Handlers.Products.Commands
 {
@@ -22,6 +25,7 @@ namespace Business.Handlers.Products.Commands
 	/// </summary>
 	public class CreateProductCommand : IRequest<IResult>
 	{
+		public int Id { get; set; }
 
 		public int CreatedUserId { get; set; }
 		public int LastUpdatedUserId { get; set; }
@@ -29,7 +33,8 @@ namespace Business.Handlers.Products.Commands
 		public bool isDeleted { get; set; }
 		public string ProductName { get; set; }
 		public string ProductColor { get; set; }
-		public string Size { get; set; }
+
+        public string Size { get; set; }
 
 
 		public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, IResult>
@@ -48,7 +53,7 @@ namespace Business.Handlers.Products.Commands
 			[SecuredOperation(Priority = 1)]
 			public async Task<IResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
 			{
-				var isThereProductRecord = _productRepository.Query().Any(u => u.CreatedUserId == request.CreatedUserId);
+				var isThereProductRecord = _productRepository.Query().Any(u => u.Id == request.Id);
 
 				if (isThereProductRecord == true)
 					return new ErrorResult(Messages.NameAlreadyExist);

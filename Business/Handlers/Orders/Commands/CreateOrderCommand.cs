@@ -23,6 +23,7 @@ namespace Business.Handlers.Orders.Commands
     public class CreateOrderCommand : IRequest<IResult>
     {
 
+        public int Id { get; set; }
         public int CreatedUserId { get; set; }
         public int LastUpdatedUserId { get; set; }
         public bool Status { get; set; }
@@ -48,7 +49,7 @@ namespace Business.Handlers.Orders.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
             {
-                var isThereOrderRecord = _orderRepository.Query().Any(u => u.CreatedUserId == request.CreatedUserId);
+                var isThereOrderRecord = _orderRepository.Query().Any(u => u.Id == request.Id);
 
                 if (isThereOrderRecord == true)
                     return new ErrorResult(Messages.NameAlreadyExist);

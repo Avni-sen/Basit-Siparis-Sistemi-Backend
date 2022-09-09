@@ -14,6 +14,8 @@ using System.Linq;
 using Core.Aspects.Autofac.Validation;
 using Business.Handlers.Products.ValidationRules;
 using System;
+using Entities.Enums;
+using static Entities.Enums.ESizeTypeEnum;
 
 namespace Business.Handlers.Products.Commands
 {

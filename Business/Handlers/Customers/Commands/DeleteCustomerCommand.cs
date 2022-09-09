@@ -37,7 +37,7 @@ namespace Business.Handlers.Customers.Commands
             public async Task<IResult> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
             {
                 var customerToDelete = _customerRepository.Get(p => p.Id == request.Id);
-                customerToDelete.isDeleted = false;
+                customerToDelete.isDeleted = true;
                 _customerRepository.Update(customerToDelete);
                 await _customerRepository.SaveChangesAsync();
                 return new SuccessResult(Messages.Deleted);
