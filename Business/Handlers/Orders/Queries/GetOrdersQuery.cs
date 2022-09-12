@@ -1,5 +1,4 @@
-﻿
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
 using Core.Aspects.Autofac.Performance;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -35,7 +34,10 @@ namespace Business.Handlers.Orders.Queries
             public async Task<IDataResult<IEnumerable<Order>>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<Order>>(await _orderRepository.GetListAsync(x =>x.isDeleted == false));
+           
             }
         }
+
+     
     }
 }

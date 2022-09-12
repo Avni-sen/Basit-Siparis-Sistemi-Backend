@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Entities.Concrete;
 using System.Collections.Generic;
+using Entities.Dtos;
 
 namespace WebAPI.Controllers
 {
@@ -37,13 +38,36 @@ namespace WebAPI.Controllers
 			return BadRequest(result.Message);
 		}
 
-		///<summary>
-		///It brings the details according to its id.
-		///</summary>
-		///<remarks>WareHouses</remarks>
-		///<return>WareHouses List</return>
-		///<response code="200"></response>  
-		[Produces("application/json", "text/plain")]
+
+        ///<summary>
+        ///List WareHousesDetailsDto
+        ///</summary>
+        ///<remarks>WareHousesDetailsDto</remarks>
+        ///<return>List WareHousesDetailsDto</return>
+        ///<response code="200"></response>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<WareHouseDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [HttpGet("getdetails")]
+        public async Task<IActionResult> GetWareHouseDetails()
+        {
+            var result = await Mediator.Send(new GetWareHouseDetailsDtoQuery());
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
+
+
+
+        ///<summary>
+        ///It brings the details according to its id.
+        ///</summary>
+        ///<remarks>WareHouses</remarks>
+        ///<return>WareHouses List</return>
+        ///<response code="200"></response>  
+        [Produces("application/json", "text/plain")]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WareHouse))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
 		[HttpGet("getbyid")]

@@ -51,6 +51,8 @@ namespace Business.Handlers.Orders.Commands
             {
                 var isThereOrderRecord = _orderRepository.Query()
                     .Any(u => u.ProductId == request.ProductId && u.CustomerId == request.CustomerId && u.Amount == request.Amount && u.isDeleted == false);
+
+                //
                 if (isThereOrderRecord == true)
                     return new ErrorResult(Messages.NameAlreadyExist);
              

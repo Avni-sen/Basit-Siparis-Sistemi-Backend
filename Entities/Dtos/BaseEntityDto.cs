@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Core.Entities
+namespace Entities.Dtos
 {
-    public class BaseEntity : IEntity
+    public class BaseEntityDto
     {
-        public virtual int Id { get; set; }
+        public int Id { get; set; }
         public int CreatedUserId { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public int LastUpdatedUserId { get; set; }

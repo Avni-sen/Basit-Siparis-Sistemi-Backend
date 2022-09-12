@@ -108,7 +108,6 @@ namespace Business
             services.AddTransient<IUserGroupRepository, UserGroupRepository>();
 
             services.AddDbContext<ProjectDbContext, DArchInMemory>(ServiceLifetime.Transient);
-            services.AddSingleton<MongoDbContextBase, MongoDbContext>();
         }
 
         /// <summary>

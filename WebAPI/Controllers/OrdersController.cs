@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Entities.Concrete;
 using System.Collections.Generic;
+using Entities.Dtos;
 
 namespace WebAPI.Controllers
 {
@@ -37,13 +38,37 @@ namespace WebAPI.Controllers
 			return BadRequest(result.Message);
 		}
 
-		///<summary>
-		///It brings the details according to its id.
-		///</summary>
-		///<remarks>Orders</remarks>
-		///<return>Orders List</return>
-		///<response code="200"></response>  
-		[Produces("application/json", "text/plain")]
+
+
+        ///<summary>
+        ///List OrderDetailsDto
+        ///</summary>
+        ///<remarks>Order Details</remarks>
+        ///<return>List Order Details</return>
+        ///<response code="200"></response>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OrderDetailsDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [HttpGet("getorderdetails")]
+        public async Task<IActionResult> GetOrderDetails()
+        {
+            var result = await Mediator.Send(new GetOrderDetailsDtoQuery());
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
+
+
+
+        ///<summary>
+        ///It brings the details according to its id.
+        ///</summary>
+        ///<remarks>Orders</remarks>
+        ///<return>Orders List</return>
+        ///<response code="200"></response>  
+        [Produces("application/json", "text/plain")]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Order))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
 		[HttpGet("getbyid")]

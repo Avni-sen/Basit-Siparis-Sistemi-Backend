@@ -49,6 +49,7 @@ namespace Business.Handlers.Customers.Commands
 			[SecuredOperation(Priority = 1)]
 			public async Task<IResult> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
 			{
+				//burada isim ve isdeleted kontrolü yapılacak..
 				var isThereCustomerRecord = await _customerRepository.GetAsync(u => u.Id == request.Id);
 
 

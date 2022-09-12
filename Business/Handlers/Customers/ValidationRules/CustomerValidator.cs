@@ -1,4 +1,5 @@
 ﻿
+using Business.Constants;
 using Business.Handlers.Customers.Commands;
 using FluentValidation;
 
@@ -7,6 +8,8 @@ namespace Business.Handlers.Customers.ValidationRules
 
 	public class CreateCustomerValidator : AbstractValidator<CreateCustomerCommand>
 	{
+
+		//
 		public CreateCustomerValidator()
 		{
 			RuleFor(x => x.CustomerCode).NotEmpty();

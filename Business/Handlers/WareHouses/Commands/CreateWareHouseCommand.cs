@@ -49,7 +49,7 @@ namespace Business.Handlers.WareHouses.Commands
 			[SecuredOperation(Priority = 1)]
 			public async Task<IResult> Handle(CreateWareHouseCommand request, CancellationToken cancellationToken)
 			{
-				var isThereWareHouseRecord = _wareHouseRepository.Query().Any(u => u.CreatedUserId == request.CreatedUserId);
+				var isThereWareHouseRecord = _wareHouseRepository.Query().Any(u=>u.ProductId == request.ProductId &&  u.Amount == request.Amount && u.IsReadyForSell == true && u.isDeleted ==false);
 
 				if (isThereWareHouseRecord == true)
 					return new ErrorResult(Messages.NameAlreadyExist);
