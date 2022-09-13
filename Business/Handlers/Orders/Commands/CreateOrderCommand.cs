@@ -36,11 +36,13 @@ namespace Business.Handlers.Orders.Commands
         public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, IResult>
         {
             private readonly IOrderRepository _orderRepository;
+            private readonly IWareHouseRepository _wareHouseRepository;
             private readonly IMediator _mediator;
-            public CreateOrderCommandHandler(IOrderRepository orderRepository, IMediator mediator)
+            public CreateOrderCommandHandler(IOrderRepository orderRepository, IMediator mediator, IWareHouseRepository wareHouseRepository)
             {
                 _orderRepository = orderRepository;
                 _mediator = mediator;
+                _wareHouseRepository = wareHouseRepository;
             }
 
             [ValidationAspect(typeof(CreateOrderValidator), Priority = 1)]
@@ -52,8 +54,9 @@ namespace Business.Handlers.Orders.Commands
                 var isThereOrderRecord = _orderRepository.Query()
                     .Any(u => u.ProductId == request.ProductId && u.CustomerId == request.CustomerId && u.Amount == request.Amount && u.isDeleted == false);
 
-                //
-                if (isThereOrderRecord == true)
+                //var isOkeyWareHouse = _wareHouseRepository.Query().Any(u => u.ProductId == request.ProductId && u.Amount >= request.Amount && u.IsReadyForSell==true && u.isDeleted ==false);
+                //var Amount = _wareHouseRepository.Get(u=>u.ProductId == request.ProductId).Amount;
+                if (isThereOrderRecord == true /*&& isOkeyWareHouse!=true*/)
                     return new ErrorResult(Messages.NameAlreadyExist);
              
                 var addedOrder = new Order
@@ -69,6 +72,15 @@ namespace Business.Handlers.Orders.Commands
                     Amount = request.Amount,
 
                 };
+
+
+                //var updateWareHouse = new WareHouse
+                //{
+                //Amount = Amount - request.Amount
+                //};
+
+                //_wareHouseRepository.Update(updateWareHouse);
+                //await _wareHouseRepository.SaveChangesAsync();
 
                 _orderRepository.Add(addedOrder);
                 await _orderRepository.SaveChangesAsync();

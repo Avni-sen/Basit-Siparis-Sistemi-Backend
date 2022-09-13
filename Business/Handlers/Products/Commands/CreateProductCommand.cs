@@ -44,6 +44,8 @@ namespace Business.Handlers.Products.Commands
 				_mediator = mediator;
 			}
 
+
+
 			[ValidationAspect(typeof(CreateProductValidator), Priority = 1)]
 			[CacheRemoveAspect("Get")]
 			[LogAspect(typeof(FileLogger))]
@@ -53,7 +55,7 @@ namespace Business.Handlers.Products.Commands
 				
 
                 var isThereCustomerIsDeleted = _productRepository.Query()
-					.Any(u => u.ProductName == request.ProductName && u.ProductColor == request.ProductColor && u.Size ==request.Size && u.isDeleted == false);
+					.Any(u => u.ProductName == request.ProductName && u.ProductColor == request.ProductColor && u.Size == request.Size && u.isDeleted == false);
 
                 if (isThereCustomerIsDeleted == true)
 					return new ErrorResult(Messages.NameAlreadyExist);
@@ -69,7 +71,6 @@ namespace Business.Handlers.Products.Commands
 					ProductName = request.ProductName,
 					ProductColor = request.ProductColor,
 					Size = request.Size,
-
 				};
 
 				_productRepository.Add(addedProduct);

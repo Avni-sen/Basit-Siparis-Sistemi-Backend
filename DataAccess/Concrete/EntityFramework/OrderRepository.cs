@@ -19,6 +19,24 @@ namespace DataAccess.Concrete.EntityFramework
 		{
 		}
 
+		//public async Task<Order> CreateOrderTheWareHouse()
+		//{
+		//	var result = await (from order in Context.Orders
+		//						join wareHouse in Context.WareHouses
+		//						on order.ProductId equals wareHouse.ProductId
+		//						where order.Amount <= wareHouse.Amount
+		//						where wareHouse.IsReadyForSell == true
+		//						select new Order
+		//						{
+		//							Amount = order.Amount,
+		//							ProductId = order.ProductId,
+		//							CreatedDate = order.CreatedDate,
+		//							CreatedUserId = order.CreatedUserId,
+		//							CustomerId = order.CustomerId,
+		//						}).ToListAsync();
+		//	return result;
+		//}
+
 		public async Task<List<OrderDetailsDto>> GetOrderDetailsDto()
 		{
 			var result = await (from order in Context.Orders
@@ -43,5 +61,7 @@ namespace DataAccess.Concrete.EntityFramework
 								}).ToListAsync();
 			return result;
 		}
+
+
 	}
 }

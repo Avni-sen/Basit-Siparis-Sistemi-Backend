@@ -49,8 +49,8 @@ namespace Business.Handlers.WareHouses.Commands
 			[SecuredOperation(Priority = 1)]
 			public async Task<IResult> Handle(UpdateWareHouseCommand request, CancellationToken cancellationToken)
 			{
-				var isThereWareHouseRecord = await _wareHouseRepository.GetAsync(u => u.Id == request.Id);
 
+                var isThereWareHouseRecord = await _wareHouseRepository.GetAsync(u => u.Id == request.Id);
 
 				isThereWareHouseRecord.CreatedUserId = request.CreatedUserId;
 				isThereWareHouseRecord.CreatedDate = request.CreatedDate;

@@ -18,6 +18,7 @@ namespace DataAccess.Concrete.EntityFramework
 		{
 		}
 
+
 		public async Task<List<WareHouseDto>> GetWareHouseDetailsDto()
 		{
 

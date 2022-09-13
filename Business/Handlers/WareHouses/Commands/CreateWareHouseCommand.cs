@@ -70,6 +70,7 @@ namespace Business.Handlers.WareHouses.Commands
 
 				_wareHouseRepository.Add(addedWareHouse);
 				await _wareHouseRepository.SaveChangesAsync();
+
 				return new SuccessResult(Messages.Added);
 			}
 		}
