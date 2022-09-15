@@ -44,11 +44,13 @@ namespace DataAccess.Concrete.EntityFramework
 								on order.CustomerId equals customer.Id
 								join product in Context.Products
 								on order.ProductId equals product.Id
+								where order.isDeleted==false
 								select new OrderDetailsDto()
 								{
 									ProductId = order.ProductId,
 									CustomerId = order.CustomerId,
 									Amount = order.Amount,
+									Size =order.Size,
 									CreatedDate = order.CreatedDate,
 									CreatedUserId = order.CreatedUserId,
 									CustomerName = customer.CustomerName,

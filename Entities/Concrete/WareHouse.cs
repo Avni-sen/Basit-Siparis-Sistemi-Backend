@@ -9,6 +9,7 @@ namespace Entities.Concrete
     {
         public int ProductId { get; set; }
         public int Amount { get; set; }
+        public string Size { get; set; }
         public bool IsReadyForSell { get; set; }
     }
 }

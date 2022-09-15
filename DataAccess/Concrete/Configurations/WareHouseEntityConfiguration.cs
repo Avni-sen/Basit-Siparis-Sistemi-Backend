@@ -15,6 +15,7 @@ namespace DataAccess.Concrete.Configurations
             builder.Property(x => x.ProductId);
             builder.Property(x => x.Amount);
             builder.Property(x => x.IsReadyForSell);
+            builder.Property(x => x.Size);
         }
     }
 }

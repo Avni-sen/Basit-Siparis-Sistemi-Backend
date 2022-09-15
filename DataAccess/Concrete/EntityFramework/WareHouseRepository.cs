@@ -18,18 +18,24 @@ namespace DataAccess.Concrete.EntityFramework
 		{
 		}
 
+		public async Task<bool> ExistsProduct(int productId, string size, int amount)
+		{
+         var isOkeyWareHouse = await Context.WareHouses.AnyAsync(u => u.ProductId == productId && u.Amount >= amount && u.Size == size && u.IsReadyForSell == true && u.isDeleted == false);
+			return isOkeyWareHouse;
+        }
 
-		public async Task<List<WareHouseDto>> GetWareHouseDetailsDto()
+        public async Task<List<WareHouseDto>> GetWareHouseDetailsDto()
 		{
 
 			var result = await (from warehouse in Context.WareHouses
-								join product in Context.Products
-								on warehouse.ProductId equals product.Id
-								where warehouse.isDeleted == false
+								join product in Context.Products on warehouse.ProductId equals product.Id into p from product in p.DefaultIfEmpty()
+
+                                where warehouse.isDeleted == false
 								select new WareHouseDto
 								{
 									Id = warehouse.Id,
 									ProductId = product.Id,
+									Size = warehouse.Size,
 									ProductName = product.ProductName,
 									Status = warehouse.Status,
 									isDeleted = warehouse.isDeleted,

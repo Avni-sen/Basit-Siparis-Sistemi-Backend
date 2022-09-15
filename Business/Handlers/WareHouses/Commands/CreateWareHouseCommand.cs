@@ -30,6 +30,7 @@ namespace Business.Handlers.WareHouses.Commands
 		public bool isDeleted { get; set; }
 		public int ProductId { get; set; }
 		public int Amount { get; set; }
+		public string Size { get; set; }
 		public bool IsReadyForSell { get; set; }
 
 
@@ -61,6 +62,7 @@ namespace Business.Handlers.WareHouses.Commands
 					LastUpdatedUserId = request.LastUpdatedUserId,
 					LastUpdatedDate = request.LastUpdatedDate,
 					Status = request.Status,
+					Size = request.Size,
 					isDeleted = request.isDeleted,
 					ProductId = request.ProductId,
 					Amount = request.Amount,

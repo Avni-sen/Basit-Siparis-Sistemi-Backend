@@ -30,6 +30,7 @@ namespace Business.Handlers.WareHouses.Commands
 		public bool isDeleted { get; set; }
 		public int ProductId { get; set; }
 		public int Amount { get; set; }
+		public string Size { get; set; }
 		public bool IsReadyForSell { get; set; }
 
 		public class UpdateWareHouseCommandHandler : IRequestHandler<UpdateWareHouseCommand, IResult>
@@ -59,6 +60,7 @@ namespace Business.Handlers.WareHouses.Commands
 				isThereWareHouseRecord.Status = request.Status;
 				isThereWareHouseRecord.isDeleted = request.isDeleted;
 				isThereWareHouseRecord.ProductId = request.ProductId;
+				isThereWareHouseRecord.Size = request.Size;
 				isThereWareHouseRecord.Amount = request.Amount;
 				isThereWareHouseRecord.IsReadyForSell = request.IsReadyForSell;
 
