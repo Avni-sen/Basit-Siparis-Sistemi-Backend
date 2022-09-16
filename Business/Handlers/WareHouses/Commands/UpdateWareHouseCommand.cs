@@ -51,9 +51,11 @@ namespace Business.Handlers.WareHouses.Commands
 			public async Task<IResult> Handle(UpdateWareHouseCommand request, CancellationToken cancellationToken)
 			{
 
-                var isThereWareHouseRecord = await _wareHouseRepository.GetAsync(u => u.Id == request.Id);
 
-				isThereWareHouseRecord.CreatedUserId = request.CreatedUserId;
+                var isThereWareHouseRecord = await _wareHouseRepository.GetAsync(u => u.Id == request.Id );
+               var isThereWareHouse = _wareHouseRepository.Query().Any(u => u.ProductId == request.ProductId && u.Amount == request.Amount && u.IsReadyForSell == true && u.isDeleted == false);
+				if (isThereWareHouse != true) { 
+                isThereWareHouseRecord.CreatedUserId = request.CreatedUserId;
 				isThereWareHouseRecord.CreatedDate = request.CreatedDate;
 				isThereWareHouseRecord.LastUpdatedUserId = request.LastUpdatedUserId;
 				isThereWareHouseRecord.LastUpdatedDate = request.LastUpdatedDate;
@@ -68,7 +70,9 @@ namespace Business.Handlers.WareHouses.Commands
 				_wareHouseRepository.Update(isThereWareHouseRecord);
 				await _wareHouseRepository.SaveChangesAsync();
 				return new SuccessResult(Messages.Updated);
-			}
+                }
+				return new ErrorResult(Messages.NameAlreadyExist);
+            }
 		}
 	}
 }

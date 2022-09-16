@@ -50,22 +50,28 @@ namespace Business.Handlers.Products.Commands
 			public async Task<IResult> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
 			{
 				var isThereProductRecord = await _productRepository.GetAsync(u => u.Id == request.Id);
+                var isThereCustomerProperty = _productRepository.Query()
+                   .Any(u => u.ProductName == request.ProductName && u.ProductColor == request.ProductColor && u.Size == request.Size && u.isDeleted == false);
+
+				if (isThereCustomerProperty != true)
+				{
+                    isThereProductRecord.CreatedUserId = request.CreatedUserId;
+                    isThereProductRecord.CreatedDate = DateTime.Now;
+                    isThereProductRecord.LastUpdatedUserId = request.LastUpdatedUserId;
+                    isThereProductRecord.LastUpdatedDate = DateTime.Now;
+                    isThereProductRecord.Status = request.Status;
+                    isThereProductRecord.isDeleted = request.isDeleted;
+                    isThereProductRecord.ProductName = request.ProductName;
+                    isThereProductRecord.ProductColor = request.ProductColor;
+                    isThereProductRecord.Size = request.Size;
 
 
-				isThereProductRecord.CreatedUserId = request.CreatedUserId;
-				isThereProductRecord.CreatedDate = DateTime.Now;
-				isThereProductRecord.LastUpdatedUserId = request.LastUpdatedUserId;
-				isThereProductRecord.LastUpdatedDate = DateTime.Now;
-                isThereProductRecord.Status = request.Status;
-				isThereProductRecord.isDeleted = request.isDeleted;
-				isThereProductRecord.ProductName = request.ProductName;
-				isThereProductRecord.ProductColor = request.ProductColor;
-				isThereProductRecord.Size = request.Size;
+                    _productRepository.Update(isThereProductRecord);
+                    await _productRepository.SaveChangesAsync();
+                    return new SuccessResult(Messages.Updated);
+                }
 
-
-				_productRepository.Update(isThereProductRecord);
-				await _productRepository.SaveChangesAsync();
-				return new SuccessResult(Messages.Updated);
+               return new ErrorResult(Messages.NameAlreadyExist);
 			}
 		}
 	}
